@@ -70,7 +70,6 @@ git clone https://github.com/massazoum/school_library.git
 Install this project with:
 
 ```
-cd cd Create-your-own-Enumerable
 gem install
 ```
 

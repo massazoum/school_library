@@ -14,7 +14,7 @@ class Person
   end
 
   private
-  
+
   def of_age?
     return false if @age.nil?
 

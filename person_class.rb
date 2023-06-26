@@ -13,15 +13,15 @@ class Person
     of_age? || @parent_permission
   end
 
+  def generate_id
+    rand(1..9999)
+  end
+
   private
 
   def of_age?
     return false if @age.nil?
 
     @age >= 18
-  end
-
-  def generate_id
-    rand(1..9999)
   end
 end

@@ -6,7 +6,7 @@ class Person < Nameable
 
   def initialize(name = 'Unknown', age = nil, parent_permission: true)
     @id = generate_id
-    @name = name
+    super(name)
     @age = age
     @parent_permission = parent_permission
   end

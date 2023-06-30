@@ -58,10 +58,6 @@ class App
       student = Student.new(classroom, age, name)
       @people << student
       puts 'Person created successfully.'
-    # elsif %w[y yes].include?(keyword)
-    #   student = Student.new(classroom, age, name)
-    #   @people << student
-    #   puts 'Person created successfully.'
     else
       puts "Invalid input. The keyword should be 'n' or 'y'."
     end

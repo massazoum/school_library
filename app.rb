@@ -12,161 +12,127 @@ class App
     @books = []
   end
 
-  def run
-    puts "Welcome to Shool Library App!"
-
-    loop do
-      puts "\nPlease Choose an option by enterin a number:"
-      puts "1. List all books"
-      puts "2. List all people"
-      puts "3. Create a person"
-      puts "4. Create a book"
-      puts "5. Create a rental"
-      puts "6. List all rentals for a given person id"
-      puts "7. Exit"
-
-      choice = gets.chomp.to_i
-
-      case choice
-      when 1
-        list_all_books
-      when 2
-        list_all_people
-      when 3
-        create_person
-      when 4
-        create_book
-      when 5
-        create_rental
-      when 6
-        list_rentals_for_person
-      when 7
-        exit_app
-      else
-        puts "Invalid choice! Please try again."
-      end
-    end
-  end
-
-  private
-
   def list_all_books
     if @books.empty?
-      puts "No books available."
+      puts 'No books available.'
     else
-      puts "List of all books:"
+      puts 'List of all books:'
       @books.each { |book| puts "#{book.title} by #{book.author}" }
     end
   end
 
   def list_all_people
     if @people.empty?
-      puts "No people available."
+      puts 'No people available.'
     else
-      puts "List of all people:"
-      @people.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age} "}
+      puts 'List of all people:'
+      @people.each { |person| puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}" }
     end
   end
+
   def create_person
-   print "Do you want to create a student (1) or a teacher (2)? [Input the number]:"
+    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     role_choice = gets.chomp.to_i
+
     case role_choice
-    when 1    
-     create_student()
+    when 1
+      create_student
     when 2
-      create_teacher()
+      create_teacher
     else
-      puts "Invalid role choice! Please try again."
+      puts 'Invalid role choice! Please try again.'
     end
   end
 
-  def create_student()
-    print "age:"
+  def create_student
+    print 'Age: '
     age = gets.chomp.to_i
-    print "Name:"
+    print 'Name: '
     name = gets.chomp
-    classroom="classroom"
-    print "Has parent permission? [Y/N]: "
-    keyword = gets.chomp
-  if keyword == "n" || keyword == "N"
-   student = Student.new(classroom,age,name)
-   @people << student
-   puts "Person created successfully"
-  elsif keyword == "y" || keyword == "Y"
-    student = Student.new(classroom,age,name)
-    @people << student
-    puts "Person created successfully"
-  else
-    puts "The keyword is neither 'n' nor 'y'"
-  end  
-    
+    classroom = 'classroom'
+
+    print 'Has parent permission? [Y/N]: '
+    keyword = gets.chomp.downcase
+
+    if %w[n no].include?(keyword) || %w[y yes].include?(keyword)
+      student = Student.new(classroom, age, name)
+      @people << student
+      puts 'Person created successfully.'
+    # elsif %w[y yes].include?(keyword)
+    #   student = Student.new(classroom, age, name)
+    #   @people << student
+    #   puts 'Person created successfully.'
+    else
+      puts "Invalid input. The keyword should be 'n' or 'y'."
+    end
   end
 
-  def create_teacher()
-    print "age:"
+  def create_teacher
+    print 'Age: '
     age = gets.chomp.to_i
-    print "Name:"
+    print 'Name: '
     name = gets.chomp
-    print "specialization:"
+    print 'Specialization: '
     specialization = gets.chomp
-  
-    parent_permission = true
+
     teacher = Teacher.new(name, age, specialization)
     @people << teacher
-    print "Person created successfully"
+
+    puts 'Person created successfully.'
   end
 
   def create_book
-    print "Title:"
+    print 'Title: '
     title = gets.chomp
-    print "Author:"
+    print 'Author: '
     author = gets.chomp
+
     book = Book.new(title, author)
     @books << book
-    puts "Book created successfully"
+
+    puts 'Book created successfully.'
   end
 
   def create_rental
-
-    puts 'Select a book from following list by number '
+    puts 'Select a book from the following list by number:'
     @books.each_with_index do |book, index|
-    puts "#{index}) Title: #{book.title} , Author: #{book.author}"
+      puts "#{index}) Title: #{book.title}, Author: #{book.author}"
     end
 
     book_index = gets.chomp.to_i
     book = @books[book_index]
-    puts 'Select a person from the list by number(not id)'
+
+    puts 'Select a person from the list by number (not ID):'
     @people.each_with_index do |person, index|
       puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
 
     person_index = gets.chomp.to_i
     person = @people[person_index]
+
     print 'Date: '
     date = gets.chomp
+
     Rental.new(date, book, person)
-    puts "Rental created successfully!"
-    end
-  
+    puts 'Rental created successfully!'
+  end
+
   def list_rentals_for_person
-    print 'ID of person:'
+    print 'ID of the person: '
     person_index = gets.chomp.to_i
     person = @people.find { |p| p.id == person_index }
-    
+
     if person.nil?
-      puts "Invalid person index"
+      puts 'Invalid person ID.'
     else
       person.rentals.each do |rental|
-        puts " Date: #{rental.date}, Book: #{rental.book.title} ,by #{rental.book.author}"
+        puts "Date: #{rental.date}, Book: #{rental.book.title} by #{rental.book.author}"
       end
     end
   end
 
   def exit_app
-    puts "Thank you using this app"
+    puts 'Thank you for using this app.'
     exit
   end
 end
-
-app = App.new
-app.run

@@ -5,8 +5,8 @@ class Rental
   def initialize(date, book, person)
     @date = date
     @book = book
-    book.rentals << self unless book.nil? 
+    book.rentals << self unless book.nil?
     @person = person
-    person.rentals << self unless person.nil? 
+    person.rentals << self unless person.nil?
   end
 end
